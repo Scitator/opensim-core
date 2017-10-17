@@ -291,13 +291,15 @@ void Joint::scale(const ScaleSet& scaleSet)
 
     // if the frame is owned by this Joint scale it,
     // otherwise let the owner of the frame decide.
-    int found = getProperty_frames().findIndex(getParentFrame());
+    //int found = getProperty_frames().findIndex(getParentFrame());
+    int found = getProperty_frames().findIndexForName(getParentFrame().getName()); //temporary fix
     if (found >= 0) {
         PhysicalOffsetFrame& offset
             = SimTK_DYNAMIC_CAST_DEBUG<PhysicalOffsetFrame&>(upd_frames(found));
         offset.scale(parentFactors);
     }
-    found = getProperty_frames().findIndex(getChildFrame());
+    //found = getProperty_frames().findIndex(getChildFrame());
+    found = getProperty_frames().findIndexForName(getChildFrame().getName()); //temporary fix
     if (found >= 0) {
         PhysicalOffsetFrame& offset
             = SimTK_DYNAMIC_CAST_DEBUG<PhysicalOffsetFrame&>(upd_frames(found));
