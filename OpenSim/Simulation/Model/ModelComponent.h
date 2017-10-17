@@ -44,6 +44,7 @@
 // INCLUDES
 #include <OpenSim/Simulation/osimSimulationDLL.h>
 #include <OpenSim/Common/Component.h>
+#include <OpenSim/Common/ScaleSet.h>
 
 namespace OpenSim {
 
@@ -107,6 +108,37 @@ public:
      * Get a modifiable reference to the Model this component is part of.
      */
     Model& updModel();
+
+    /**
+     * Perform any computations that must occur before the Model is scaled. For
+     * example, a GeometryPath must calculate and store its path length in the
+     * current body position. This method is virtual and may be implemented by
+     * any subclass of ModelComponent, but all implementations must begin with
+     * a call to `Super::preScale()` to ensure that the parent class methods
+     * execute before the child class method. The base class implementation does
+     * nothing.
+     */
+    virtual void preScale(const SimTK::State& s, const ScaleSet& scaleSet) {};
+
+    /**
+     * Scale the ModelComponent. This method is virtual and may be implemented
+     * by any subclass of ModelComponent, but all implementations must begin
+     * with a call to `Super::scale()` to ensure that the parent class methods
+     * execute before the child class method. The base class implementation does
+     * nothing.
+     */
+    virtual void scale(const SimTK::State& s, const ScaleSet& scaleSet) {};
+
+    /**
+     * Perform any computations that must occur after the Model has been scaled.
+     * For example, a GeometryPath must update its path using the information
+     * that was stored by its preScale() method. This method is virtual and may
+     * be implemented by any subclass of ModelComponent, but all implementations
+     * must begin with a call to `Super::postScale()` to ensure that the parent
+     * class methods execute before the child class method. The base class
+     * implementation does nothing.
+     */
+    virtual void postScale(const SimTK::State& s, const ScaleSet& scaleSet) {};
 
 protected:
 template <class T> friend class ModelComponentSet;
