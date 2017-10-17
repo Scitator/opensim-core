@@ -766,38 +766,34 @@ void GeometryPath::deletePathWrap(const SimTK::State& s, int aIndex)
 
 }
 
-//=============================================================================
+//==============================================================================
 // SCALING
-//=============================================================================
-//_____________________________________________________________________________
-/*
- * Perform computations that need to happen before the path is scaled.
- * For this object, that entails calculating and storing the path
- * length in the current body position.
- *
- * @param aScaleSet XYZ scale factors for the bodies.
- */
-void GeometryPath::preScale(const SimTK::State& s, const ScaleSet& aScaleSet)
+//==============================================================================
+void GeometryPath::preScale(const SimTK::State& s, const ScaleSet& scaleSet)
 {
-    setPreScaleLength( s,  getLength(s) );
+    Super::preScale(s, scaleSet);
+    setPreScaleLength(s, getLength(s));
 }
 
-//_____________________________________________________________________________
-/*
- * Scale the path based on XYZ scale factors for each body.
- *
- * @param aScaleSet XYZ scale factors for the bodies.
- * @return Whether path was successfully scaled or not.
- */
-void GeometryPath::scale(const SimTK::State& s, const ScaleSet& aScaleSet)
+void GeometryPath::postScale(const SimTK::State& s, const ScaleSet& scaleSet)
+{
+    Super::postScale(s, scaleSet);
+
+    // Recalculate the path. Also updates via points and wrapping.
+    computePath(s);
+}
+
+
+//TODO: Temporary. Points should scale themselves.
+void GeometryPath::scale(const SimTK::State& s, const ScaleSet& scaleSet)
 {
     for (int i = 0; i < get_PathPointSet().getSize(); i++)
     {
         const string& bodyName = 
             get_PathPointSet()[i].getParentFrame().getName();
-        for (int j = 0; j < aScaleSet.getSize(); j++)
+        for (int j = 0; j < scaleSet.getSize(); j++)
         {
-            Scale& aScale = aScaleSet.get(j);
+            Scale& aScale = scaleSet.get(j);
             if (bodyName == aScale.getSegmentName())
             {
                 Vec3 scaleFactors(1.0);
@@ -808,20 +804,6 @@ void GeometryPath::scale(const SimTK::State& s, const ScaleSet& aScaleSet)
     }
 }
 
-//_____________________________________________________________________________
-/*
- * Perform computations that need to happen after the path is scaled.
- * For this object, that entails updating the path.
- *
- * @param aScaleSet XYZ scale factors for the bodies.
- */
-void GeometryPath::postScale(const SimTK::State& s, const ScaleSet& aScaleSet)
-{
-    // Recalculate the path. This will also update the geometry.
-    // Done here since scale is invoked before bodies are scaled
-    // so we may not have enough info to update (e.g. wrapping, via points)
-    computePath(s);
-}
 
 //--------------------------------------------------------------------------
 // COMPUTATIONS

@@ -184,9 +184,18 @@ public:
     //--------------------------------------------------------------------------
     // SCALING
     //--------------------------------------------------------------------------
-    void preScale(const SimTK::State& s, const ScaleSet& aScaleSet);
-    void scale(const SimTK::State& s, const ScaleSet& aScaleSet);
-    void postScale(const SimTK::State& s, const ScaleSet& aScaleSet);
+
+    /**
+     * Calculate the path length in the current pose and store it for use in the
+     * postScale() method (i.e., after the Model has been scaled).
+     */
+    void preScale(const SimTK::State& s, const ScaleSet& scaleSet) override;
+
+    //TODO: Temporary. Points should scale themselves.
+    void scale(const SimTK::State& s, const ScaleSet& scaleSet) override;
+
+    /** Recalculate the path. */
+    void postScale(const SimTK::State& s, const ScaleSet& scaleSet) override;
 
     //--------------------------------------------------------------------------
     // Visualization Support
