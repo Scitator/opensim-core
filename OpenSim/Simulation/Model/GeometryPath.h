@@ -186,8 +186,8 @@ public:
     //--------------------------------------------------------------------------
 
     /**
-     * Calculate the path length in the current pose and store it for use in the
-     * postScale() method (i.e., after the Model has been scaled).
+     * Calculate the path length in the current pose and store it for use after
+     * the Model has been scaled.
      */
     void preScale(const SimTK::State& s, const ScaleSet& scaleSet) override;
 
