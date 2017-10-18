@@ -106,7 +106,17 @@ public:
     //--------------------------------------------------------------------------
     // SCALE
     //--------------------------------------------------------------------------
-    virtual void preScale(const SimTK::State& s, const ScaleSet& aScaleSet);
+
+    /**
+     * Calculate the path length in the current pose and store it for use after
+     * the Model has been scaled.
+     */
+    void preScale(const SimTK::State& s, const ScaleSet& scaleSet) override;
+
+
+
+
+    //virtual void preScale(const SimTK::State& s, const ScaleSet& aScaleSet);
     virtual void scale(const SimTK::State& s, const ScaleSet& aScaleSet);
     virtual void postScale(const SimTK::State& s, const ScaleSet& aScaleSet);
 
