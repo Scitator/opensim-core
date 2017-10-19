@@ -97,7 +97,7 @@ into the package. If you are building OpenSim on the same machine on which you
 plan to use it, you can leave this OFF. If you are distributing OpenSim to
 other computers, you should turn this ON. If macOS, this option affects how
 RPATH is set for the SWIG-generated shared libraries. This variable has no
-effect if BUILD_PYTHON_WRAPPING is OFF." OFF)
+effect if BUILD_PYTHON_WRAPPING is OFF." ON)
 mark_as_advanced(OPENSIM_PYTHON_STANDALONE) # Mainly for packagers; not users.
 # There are many potential ways to distribute the python bindings; here's how
 # you might want to set the above option for different ways of distributing:
