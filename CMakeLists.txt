@@ -391,9 +391,9 @@ endif()
 
 set(BUILD_JAVA_WRAPPING OFF CACHE BOOL "Build Java wrapping (needed if you're building the GUI or the Matlab wrapping; requires that you have SWIG and Java installed on your machine.)")
 
-set(BUILD_PYTHON_WRAPPING OFF CACHE BOOL "Build Python wrapping (needed if you're building the Python wrapping; requires that you have SWIG and Python installed on your machine.)")
+set(BUILD_PYTHON_WRAPPING ON CACHE BOOL "Build Python wrapping (needed if you're building the Python wrapping; requires that you have SWIG and Python installed on your machine.)")
 
-set(OPENSIM_PYTHON_VERSION 2 CACHE STRING
+set(OPENSIM_PYTHON_VERSION 3 CACHE STRING
     "The major Python version (2 or 3) for which to build the wrapping.")
 # To create a drop-down in the CMake GUI:
 set_property(CACHE OPENSIM_PYTHON_VERSION PROPERTY STRINGS "2" "3")
